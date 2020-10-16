@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/audit")
-@CrossOrigin(origins = "*")
+//@CrossOrigin( origins = )
 @Api(value = "AuditRestController",description = "This Controller For HOA  Details")
 public class AuditController {
 	
@@ -47,12 +47,12 @@ public class AuditController {
 			ResponseEntity<String> resp=null;
 			try {
 				//if Audit Id exist
-				if(audit.getAId()!=null 
-						&& service.isAuditIdExit(audit.getAId())
+				if(audit.getEId()!=null 
+						&& service.isAuditIdExit(audit.getEId())
 						)
 				{
 					resp = new ResponseEntity<String>(
-							"Given Id '"+audit.getAId()+"' Data already exist",
+							"Given Id '"+audit.getEId()+"' Data already exist",
 							HttpStatus.BAD_REQUEST);
 
 				} else { //Audit id not exist
@@ -77,12 +77,12 @@ public class AuditController {
 		//2. Get One Audit by Id
 		@GetMapping("/one/{id}")
 		public ResponseEntity<?> getOneAuditDetails(
-				@PathVariable Integer aId)
+				@PathVariable Integer id)
 		{
 			ResponseEntity<?>  resp = null;
 			try {
 				//communicate with DB using ID with Serivce Layer
-				Optional<Audit> opt = service.getOneAuditDetails(aId);
+				Optional<Audit> opt = service.getOneAuditDetails(id);
 				
 				if(opt.isPresent()) { //if Audit exist
 					Audit audit = opt.get();
@@ -92,7 +92,7 @@ public class AuditController {
 					
 				} else { //if Audit not exist
 					resp = new ResponseEntity<String>(
-							"Audit '"+aId+"' Not exist!",
+							"Audit '"+id+"' Not exist!",
 							HttpStatus.BAD_REQUEST);
 				}
 				
@@ -139,19 +139,19 @@ public class AuditController {
 			ResponseEntity<String> resp = null;
 			try {
 				//if audit exist - then update
-				if(audit.getAId()!=null 
-						&& service.isAuditIdExit(audit.getAId())
+				if(audit.getEId()!=null 
+						&& service.isAuditIdExit(audit.getEId())
 						)
 				{
 					service.updateAudit(audit);
 					resp = new ResponseEntity<String>(
-							"Audit '"+audit.getAId()+"' Updated!",
+							"Audit '"+audit.getEId()+"' Updated!",
 							HttpStatus.OK);
 					
 				} else {
 					//if Audit not exist - return error message
 					resp = new ResponseEntity<String>(
-							"Product '"+audit.getAId()+"' not exist!",
+							"Product '"+audit.getEId()+"' not exist!",
 							HttpStatus.BAD_REQUEST);
 				}
 				

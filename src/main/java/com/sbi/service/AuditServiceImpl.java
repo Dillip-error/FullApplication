@@ -18,7 +18,7 @@ public class AuditServiceImpl implements IAuditService{
 	@Override
 	public Integer saveAuditInfo(Audit audit) {
 		Audit save = repo.save(audit);
-		return save.getAId() ;
+		return save.getEId() ;
 	}
 
 	@Override
